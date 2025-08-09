@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'profile_screen.dart';
 import 'scanning_screen.dart'; // <-- Import the new screen
+import 'history_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeTabContent(),
-    Text('This is the History page'),
+    HistoryScreen(),
     ProfileScreen(),
   ];
 
