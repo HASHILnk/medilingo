@@ -22,7 +22,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   Future<List<dynamic>> _fetchHistory() async {
     try {
-      final response = await _dio.get('http://192.168.16.243:8000/api/history/');
+      final response = await _dio.get('http://192.168.1.2:8000/api/history/');
       return response.data;
     } catch (e) {
       print("Error fetching history: $e");

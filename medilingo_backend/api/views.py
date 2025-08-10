@@ -8,7 +8,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser
 import google.generativeai as genai
-
+from django.contrib.auth.models import User
+from rest_framework import generics, permissions
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from .serializers import UserSerializer 
 # --- Configuration ---
 
 # Tell pytesseract where to find the Tesseract-OCR executable
@@ -81,6 +85,29 @@ class AnalyzeReportView(APIView):
             print(f"An error occurred: {e}") # For debugging on the server
             return Response({"error": "An internal error occurred during analysis."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class RegisterView(generics.CreateAPIView):
+    """
+    Handles user registration.
+    """
+    queryset = User.objects.all()
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = UserSerializer
+
+class LoginView(ObtainAuthToken):
+    """
+    Handles user login and returns an auth token.
+    """
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email,
+            'username': user.username
+        })
 
 class ReportHistoryView(APIView):
     """

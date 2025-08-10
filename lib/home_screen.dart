@@ -30,12 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('MediLingo'),
-        backgroundColor: Colors.white,
-        elevation: 1,
-        foregroundColor: Colors.black,
-      ),
+      // appBar: AppBar(
+      //   title: const Text('MediLingo'),
+      //   backgroundColor: Colors.white,
+      //   elevation: 1,
+      //   foregroundColor: Colors.black,
+      // ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -131,12 +131,26 @@ class HomeTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The build method stays exactly the same...
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        crossAxisAlignment: CrossAxisAlignment.center, // This correctly centers horizontally
+        mainAxisAlignment: MainAxisAlignment.center,  // <-- 1. ADD THIS LINE for vertical centering
+        children: <Widget>[
+          // I removed the SizedBox from the top so it's perfectly centered
+          const Icon(Icons.local_hospital, color: Color(0xFF2E8B57), size: 50),
+          const SizedBox(height: 10),
+          const Text(
+            'MediLingo',
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF2E8B57),
+            ),
+          ),
+          const SizedBox(height: 30),
+
+          // Welcome card
           const Card(
             color: Color(0xFFE8F5E9),
             child: Padding(
@@ -144,31 +158,33 @@ class HomeTabContent extends StatelessWidget {
               child: Text(
                 "Welcome! Let's take a look at your health report.",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
+                textAlign: TextAlign.center,
               ),
             ),
           ),
           const SizedBox(height: 40),
-          Center(
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2E8B57),
-                minimumSize: const Size(double.infinity, 60),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+
+          // Scan button
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF2E8B57),
+              // -- 2. CHANGE THIS --
+              // Remove infinite width and use padding instead
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
               ),
-              onPressed: () {
-                _showOptions(context);
-              },
-              icon: const Icon(Icons.document_scanner_outlined, color: Colors.white),
-              label: const Text(
-                'Scan New Report',
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
+            ),
+            onPressed: () {
+              _showOptions(context);
+            },
+            icon: const Icon(Icons.document_scanner_outlined, color: Colors.white),
+            label: const Text(
+              'Scan New Report',
+              style: TextStyle(fontSize: 20, color: Colors.white),
             ),
           ),
         ],
       ),
     );
-  }
-}
+  }}

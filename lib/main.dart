@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart'; // Import the new home screen file
+import 'home_screen.dart';
+import 'package:provider/provider.dart';
+import 'user_provider.dart';
+import 'screens/welcome_screen.dart';
 
 void main() {
-  runApp(const MediLingoApp());
+  runApp(
+    // Wrap your app with the provider
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: const MediLingoApp(),
+    ),
+  );
 }
 
 class MediLingoApp extends StatelessWidget {
@@ -17,7 +26,7 @@ class MediLingoApp extends StatelessWidget {
         fontFamily: 'Poppins',
       ),
       // Set the HomeScreen as the starting point of the app
-      home: const HomeScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }

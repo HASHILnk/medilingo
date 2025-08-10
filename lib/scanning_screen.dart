@@ -33,7 +33,7 @@ class _ScanningScreenState extends State<ScanningScreen> {
 
     try {
       // Make sure this IP is correct for your network
-      final response = await dio.post('http://192.168.16.243:8000/api/analyze/', data: formData);
+      final response = await dio.post('http://192.168.1.2:8000/api/analyze/', data: formData);
 
       if (response.statusCode == 200 && mounted) {
 
